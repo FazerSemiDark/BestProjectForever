@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour
     public float JumpForce = 5f;
     public float Speed = 5f;
 
-    private bool _jumpCan;
     private float _fallVelocity = 0f;
 
     private CharacterController _characterController;
-    private BoxCollider _jumpTrigger;
+
+    public Animator Aminations;
 
     private Vector3 _moveVector;
 
@@ -43,18 +43,29 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.right;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded == true || _jumpCan == true && _characterController.isGrounded == true)
+        if (_moveVector != Vector3.zero)
+        {
+            Aminations.SetBool("isRunning", true);
+        }
+        else
+        {
+            Aminations.SetBool("isRunning", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded == true)
         {
             _fallVelocity = -JumpForce;
-            _jumpCan = false;
+            Aminations.SetBool("isJumping", true);
         }
     }
     void FixedUpdate()
     {
         _characterController.Move(_moveVector * Speed * Time.fixedDeltaTime);
+
         if (_characterController.isGrounded) 
         {
             _fallVelocity = 0f;
+            Aminations.SetBool("isJumping", false);
         }
 
          _fallVelocity += Gravity * Time.fixedDeltaTime;
