@@ -8,6 +8,11 @@ public class FireballSource : MonoBehaviour
     public Camera cameraLink;
     public float targetInSkyDistance;
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     void Update()
     {
         var ray = cameraLink.ViewportPointToRay(new Vector3(0.5f, 0.7f, 0));
