@@ -30,6 +30,12 @@ public class PlayerHealth : MonoBehaviour
     {
         valueRectTransform.anchorMax = new Vector2(value / _maxValue, 1);
     }
+    public void AddValue(float amount)
+    {
+        value += amount;
+        value = Mathf.Clamp(value, 0, _maxValue);
+        DrawHealthBar();
+    }
     private void PlayerIsDead()
     {
         GameOverUI.SetActive(true);
